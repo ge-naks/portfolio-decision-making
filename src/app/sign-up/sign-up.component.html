@@ -1,0 +1,53 @@
+<h2>Let's get some info:</h2>
+
+<div class="inputs">
+  <mat-form-field class="fName">
+    <mat-label>First Name</mat-label>
+    <input matInput type="text" [(ngModel)]="fName" />
+    @if (fName) {
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="fName = null">
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="lName">
+    <mat-label>Last Name</mat-label>
+    <input matInput type="text" [(ngModel)]="lName" />
+    @if (lName) {
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="lName = null">
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="fName">
+    <mat-label>netID</mat-label>
+    <input matInput type="text" [(ngModel)]="netID" />
+    @if (netID) {
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="netID = null">
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>DOB</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="DOB"/>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
+
+<div class="terms">
+  <p>
+    By checking this box, you agree to the terms outlined
+    <a (click)="openDialog('0ms', '0ms')">here</a>
+  </p>
+  <section class="example-section">
+    <mat-checkbox class="example-margin">I agree</mat-checkbox>
+  </section>
+</div>
+
+<button mat-flat-button  (click)="toNext()" [disabled]="!completeCheck()" >Continue</button>
+

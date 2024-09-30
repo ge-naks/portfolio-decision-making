@@ -3,5 +3,9 @@ h1, h2, h3, p {
 }
 
 body {
-    color: black;
+    color: white;
+    background-color: #313638;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

@@ -1,0 +1,20 @@
+a{
+    color: #ffb787;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    margin-right: 70vw;
+    min-width: 20em;
+}
+
+.terms{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.terms p {
+    margin-top: 9px;
+    margin-right: .2vw;
+}
