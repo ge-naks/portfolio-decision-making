@@ -1,0 +1,9 @@
+<mat-form-field class="question-entry">
+    <mat-label>Enter B</mat-label>
+    <input matInput type="text" [(ngModel)]="entered_B" />
+    @if (entered_B) {
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="entered_B = -1">
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </mat-form-field>

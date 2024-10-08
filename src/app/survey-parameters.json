@@ -1,0 +1,20 @@
+{
+    "questions": [
+        {
+            "question_code": 1,
+            "initial_wealth": 1,
+            "A": 1,
+            "T_horizon": 5,
+            "b": 1,
+            "dT": 0.01
+        },
+        {
+            "question_code": 2,
+            "initial_wealth": 4,
+            "A": 4,
+            "T_horizon": 5,
+            "b": 5,
+            "dT": 0.01
+        }
+    ]
+}
