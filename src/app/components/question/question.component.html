@@ -2,16 +2,14 @@
 <p>Select a ceiling you think is reasonable. You have 5 attempts. Your responses will be recorded</p>
 
 
-<mat-form-field class="fName">
-    <mat-label>First Name</mat-label>
-    <input matInput type="text" [(ngModel)]="fName" />
-    @if (fName) {
-    <button matSuffix mat-icon-button aria-label="Clear" (click)="fName = null">
+<mat-form-field class="currB">
+    <mat-label>Enter Ceiling (B) Value</mat-label>
+    <input matInput type="number" [(ngModel)]="currB" />
+    @if (currB) {
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="currB = null">
       <mat-icon>close</mat-icon>
     </button>
     }
   </mat-form-field>
-
-
-
-<app-chart></app-chart>
+<button mat-raised-button (click)="runSim()">Run Simulation</button>
+<app-chart [times]="times" [wealth]="wealth"></app-chart>

@@ -1,20 +1,28 @@
 {
     "questions": [
         {
-            "question_code": 1,
-            "initial_wealth": 1,
-            "A": 1,
-            "T_horizon": 5,
-            "b": 1,
-            "dT": 0.01
+            "question_id": "Q1",
+            "initial_wealth": 10000,
+            "A": 5,
+            "T_horizon": 10,
+            "b": 0.02,
+            "delta_T": 1
         },
         {
-            "question_code": 2,
-            "initial_wealth": 4,
+            "question_id": "Q2",
+            "initial_wealth": 20000,
+            "A": 7,
+            "T_horizon": 15,
+            "b": 0.03,
+            "delta_T": 0.5
+        },
+        {
+            "question_id": "Q3",
+            "initial_wealth": 15000,
             "A": 4,
-            "T_horizon": 5,
-            "b": 5,
-            "dT": 0.01
+            "T_horizon": 20,
+            "b": 0.025,
+            "delta_T": 2
         }
     ]
 }

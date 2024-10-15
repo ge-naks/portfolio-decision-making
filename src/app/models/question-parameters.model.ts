@@ -4,5 +4,5 @@ export interface QuestionParameters {
     A: number;
     T_horizon: number;
     b: number;
-    dT: number;
+    delta_T: number;
 }

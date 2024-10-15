@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Chart, registerables, ChartConfiguration, ChartType} from 'chart.js';
+import { Component, OnInit, Input } from '@angular/core';
+import { Chart, registerables, ChartConfiguration, ChartType, LinearScale} from 'chart.js';
 
 @Component({
   selector: 'app-chart',
@@ -9,14 +9,17 @@ import { Chart, registerables, ChartConfiguration, ChartType} from 'chart.js';
   styleUrls: ['./chart.component.css'], // Change to styleUrls
 })
 export class ChartComponent implements OnInit {
+  @Input() times: number[] = [];
+  @Input() wealth: number[] = [];
+
   public config: ChartConfiguration<'line'> = {
     type: 'line',
     data: {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: [], 
       datasets: [
         {
-          label: 'My First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          label: 'Wealth over Time',
+          data: [],
           fill: false,
           borderColor: 'rgb(75, 192, 192)',
           tension: 0.1
@@ -34,10 +37,27 @@ export class ChartComponent implements OnInit {
     plugins: []
   };
 
-  chart!: Chart<'line'>; 
+  chart!: Chart<'line'>;
 
   ngOnInit(): void {
     Chart.register(...registerables);
+  }
+
+  ngAfterViewInit(): void {
     this.chart = new Chart('MyChart', this.config);
+    this.updateChartData();
+  }
+
+  ngOnChanges(): void {
+    this.updateChartData();
+  }
+
+  private updateChartData(): void {
+    if (this.chart) {
+      this.chart.data.labels = this.times;
+      this.chart.data.datasets[0].data = this.wealth;
+      this.chart.update(); // Update the chart with new data
+    }
   }
 }
+
