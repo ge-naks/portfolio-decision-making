@@ -18,3 +18,13 @@ a{
     margin-top: 9px;
     margin-right: .2vw;
 }
+
+h1{
+    margin-top: 5vh;
+}
+
+:host{
+    display: block;
+    margin-left: 4vw;
+    margin-right: 4vw;
+}

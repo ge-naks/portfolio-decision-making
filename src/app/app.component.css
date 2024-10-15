@@ -1,26 +1,2 @@
-h1{
-    margin-left: 8vw;
-    margin-top: 8vh;
-}
-
-h2 {
-    margin-left: 8vw;
-
-}
-
-h3, p {
-    margin-left: 8vw;
-    margin-right: 8vw;
-}
-
-.a{
-    margin-left: 8vw;
-    margin-right: 8vw;
-}
-
-app-sign-up {
-    display: block; /* Ensures it takes the full width by default */
-    margin-left: 8vw; /* Add space between other elements */
-}
 
 

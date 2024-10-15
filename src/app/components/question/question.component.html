@@ -1,9 +1,17 @@
-<mat-form-field class="question-entry">
-    <mat-label>Enter B</mat-label>
-    <input matInput type="text" [(ngModel)]="entered_B" />
-    @if (entered_B) {
-    <button matSuffix mat-icon-button aria-label="Clear" (click)="entered_B = -1">
+<h1>Question 1</h1>
+<p>Select a ceiling you think is reasonable. You have 5 attempts. Your responses will be recorded</p>
+
+
+<mat-form-field class="fName">
+    <mat-label>First Name</mat-label>
+    <input matInput type="text" [(ngModel)]="fName" />
+    @if (fName) {
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="fName = null">
       <mat-icon>close</mat-icon>
     </button>
     }
   </mat-form-field>
+
+
+
+<app-chart></app-chart>

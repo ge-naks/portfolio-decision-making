@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SignUpComponent } from "./sign-up/sign-up.component";
+import { SignUpComponent } from "./components/sign-up/sign-up.component";
 import { ChartComponent } from "./components/chart/chart.component";
 
 @Component({

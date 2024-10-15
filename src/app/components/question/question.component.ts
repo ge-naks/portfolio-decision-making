@@ -6,7 +6,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { SurveyService } from './SurveyService';
+import { UserDataService } from '../../services/user-data.service';
+import { UserParameters } from '../../models/user-parameters.model';
+import { ChartComponent } from "../chart/chart.component";
+
 @Component({
   selector: 'app-question',
   standalone: true,
@@ -20,22 +23,16 @@ import { SurveyService } from './SurveyService';
     MatButtonModule,
     MatDatepickerModule,
     MatCheckboxModule,
-  ],
+    ChartComponent
+],
   templateUrl: './question.component.html',
   styleUrl: './question.component.css',
 })
 export class QuestionComponent {
-  entered_B: number = -1
-  constructor(private surveyService: SurveyService) {}
-  B_choices = []
-  getQuestionID(): number{
-    //toDo
-    return -1
-  }
+  currB = ''
+  max_
 
-  onAnswerSubmit() {
-    this.surveyService.updateSurveyResponse(this.getQuestionID(), this.B_choices );
-  }
+  constructor(private userDataService: UserDataService){}
 
 }
 

@@ -13,9 +13,13 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { UserDataService } from '../../services/user-data.service';
+import { UserParameters } from '../../models/user-parameters.model';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -37,24 +41,43 @@ import {provideNativeDateAdapter} from '@angular/material/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpComponent {
+  constructor(private userDataService: UserDataService,
+    private router: Router
+  ) {}
+
+
   fName = null;
   lName = null;
   netID = null;
   DOB = null;
+  isChecked = false;
 
+  toNext() {
+    this.userDataService.updateUserData('fName', this.fName)
+    this.userDataService.updateUserData('lName', this.lName)
+    this.userDataService.updateUserData('netID', this.netID)
+    this.userDataService.updateUserData('DOB', this.DOB)
 
+    console.log(this.userDataService.getUserData())
 
-toNext() {
+    this.router.navigate(['/question']);
+  }
 
-}
-
-completeCheck():boolean{
-  return this.fName != null && this.lName != null && this.netID != null && this.DOB != null;
-}
-
+  completeCheck(): boolean {
+    return (
+      this.fName != null &&
+      this.lName != null &&
+      this.netID != null &&
+      this.DOB != null &&
+      this.isChecked
+    );
+  }
 
   readonly dialog = inject(MatDialog);
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+  openDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
     this.dialog.open(AgreementDialog, {
       width: '500px',
       enterAnimationDuration,
@@ -68,7 +91,14 @@ completeCheck():boolean{
   templateUrl: 'agreement.html',
   standalone: true,
   styleUrl: './agreement.css',
-  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatCheckboxModule,],
+  imports: [
+    MatButtonModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogTitle,
+    MatDialogContent,
+    MatCheckboxModule,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgreementDialog {
