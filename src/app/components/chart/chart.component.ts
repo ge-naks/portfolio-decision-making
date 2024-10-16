@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Chart, registerables, ChartConfiguration, ChartType, LinearScale} from 'chart.js';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Chart, registerables, ChartConfiguration, ChartType, LinearScale, Tooltip} from 'chart.js';
 
 @Component({
   selector: 'app-chart',
@@ -9,6 +9,8 @@ import { Chart, registerables, ChartConfiguration, ChartType, LinearScale} from 
   styleUrls: ['./chart.component.css'], // Change to styleUrls
 })
 export class ChartComponent implements OnInit {
+
+  constructor(private cdr: ChangeDetectorRef) {}
   @Input() times: number[] = [];
   @Input() wealth: number[] = [];
 
@@ -18,7 +20,7 @@ export class ChartComponent implements OnInit {
       labels: [], 
       datasets: [
         {
-          label: 'Wealth over Time',
+          label: 'Stochastic Wealth Generation',
           data: [],
           fill: false,
           borderColor: 'rgb(75, 192, 192)',
@@ -27,10 +29,29 @@ export class ChartComponent implements OnInit {
       ]
     },
     options: {
+      elements: {
+        point: {
+          radius: 0,
+          hoverRadius: 0,
+        }
+      },
       responsive: true,
       scales: {
+        x: {
+          ticks: {
+
+          }
+        },
         y: {
           beginAtZero: true
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          enabled: false
         }
       }
     },
@@ -46,6 +67,7 @@ export class ChartComponent implements OnInit {
   ngAfterViewInit(): void {
     this.chart = new Chart('MyChart', this.config);
     this.updateChartData();
+    this.cdr.detectChanges();
   }
 
   ngOnChanges(): void {

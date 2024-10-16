@@ -1,8 +1,13 @@
-<h1>Question 1</h1>
-<p>Select a ceiling you think is reasonable. You have 5 attempts. Your responses will be recorded</p>
+<div class="header">
+  <h1>Question 1</h1>
+  <p>Select a ceiling you think is reasonable. You have 5 attempts. Your responses will be recorded</p>  
+</div>
+
+<app-chart [times]="times" [wealth]="wealth"></app-chart>
 
 
-<mat-form-field class="currB">
+<div class="content">
+  <mat-form-field class="currB">
     <mat-label>Enter Ceiling (B) Value</mat-label>
     <input matInput type="number" [(ngModel)]="currB" />
     @if (currB) {
@@ -11,5 +16,8 @@
     </button>
     }
   </mat-form-field>
-<button mat-raised-button (click)="runSim()">Run Simulation</button>
-<app-chart [times]="times" [wealth]="wealth"></app-chart>
+<button mat-raised-button (click)="runSim()" [disabled]="!filledB()">Run Simulation</button>
+</div>
+<p>{{this.drawdown}}</p>
+
+
