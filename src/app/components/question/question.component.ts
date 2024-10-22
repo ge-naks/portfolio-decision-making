@@ -10,8 +10,10 @@ import { UserDataService } from '../../services/user-data.service';
 import { ChartComponent } from '../chart/chart.component';
 import { CommonModule } from '@angular/common';
 import { UserParameters } from '../../models/user-parameters.model';
-import { HttpClient } from '@angular/common/http';
 import { QuestionParameters } from '../../models/question-parameters.model';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+
 
 
 @Component({
@@ -29,12 +31,16 @@ import { QuestionParameters } from '../../models/question-parameters.model';
     MatCheckboxModule,
     ChartComponent,
     CommonModule,
+    HttpClientModule
+  ],
+  providers: [
   ],
   templateUrl: './question.component.html',
   styleUrl: './question.component.css',
 })
 
 export class QuestionComponent implements OnInit {
+  constructor(private userDataService: UserDataService, private cdRef: ChangeDetectorRef, private http: HttpClient) {}
 
   questions: QuestionParameters[] = []
 
@@ -52,6 +58,36 @@ export class QuestionComponent implements OnInit {
   flag: boolean = false;
   math = Math;
   run = 0
+  currentQuestionIndex: number = 0;
+  
+  shuffleArray(array: any[]): any[] {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+    return array;
+  }
+
+  loadCurrentQuestion() {
+    const question = this.questions[this.currentQuestionIndex];
+    if (question) {
+      this.question_id = question.question_id;
+      this.runSim(question.delta_T, question.T_horizon, question.initial_wealth, question.A, question.b);
+    }
+  }
+
+
+
+  async loadQuestions(): Promise<void> {
+    const response = await fetch('assets/survey-parameters.json');
+    const jsonData = await response.json();
+
+    this.questions = jsonData.questions;
+    this.questions = this.shuffleArray(this.questions)
+
+    console.log(this.questions);
+}
+
 
   generateTime(delta_T: number, iterations: number): number[] {
     let times = [];
@@ -104,7 +140,7 @@ export class QuestionComponent implements OnInit {
       this.avg_drawdown = (sum / this.drawdowns_num.length) || 0;
       this.run += 1
 
-      this.cdRef.detectChanges(); 
+      this.cdRef.detectChanges();
     }
     
     return wealth;
@@ -121,11 +157,14 @@ export class QuestionComponent implements OnInit {
 
     this.times = this.generateTime(delta_T, iterations);
     this.wealth = this.simulateWealth(delta_T, iterations, initialWealth, a, b, B_star);
+    console.log(this.currentQuestionIndex)
   }
-  
 
-  ngOnInit(): void {
+
+  async ngOnInit(): Promise<void> {
       this.runSim()
+      await this.loadQuestions();
+      console.log(this.questions)
       this.flag = true;
   }
 
@@ -137,20 +176,30 @@ export class QuestionComponent implements OnInit {
     return this.run >= 5
   }
 
-  nextQuestion(){
+  nextQuestion() {
+    if (this.currentQuestionIndex < this.questions.length - 1) {
+      this.currentQuestionIndex++;
+      this.loadCurrentQuestion();
+      this.run = 0
+      this.avg_drawdown = 0
+      this.max_drawdown = 0
+      this.drawdowns_num = []
+      this.drawdowns_str = []
+    } else {
+      console.log("No more questions.");
+    }
+
+    // Collect and save data for the current question
     let params: UserParameters = {
       question_id: this.question_id,
       entered_B: this.entered_B,
       drawdowns: this.drawdowns_num,
       avg_drawdown: this.avg_drawdown,
       max_drawdown: this.max_drawdown,
-    }
+    };
 
-    this.userDataService.addUserParameter(params)
-
-    console.log(this.userDataService.getUserData())
+    this.userDataService.addUserParameter(params);
+    console.log(this.userDataService.getUserData());
   }
-
-  constructor(private userDataService: UserDataService, private cdRef: ChangeDetectorRef, http: HttpClient) {}
-
 }
+
