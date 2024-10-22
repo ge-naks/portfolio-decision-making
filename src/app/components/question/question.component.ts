@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -7,9 +7,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { UserDataService } from '../../services/user-data.service';
-import { UserParameters } from '../../models/user-parameters.model';
 import { ChartComponent } from '../chart/chart.component';
-import { SimParameters } from '../../models/sim-parameters.model';
+import { CommonModule } from '@angular/common';
+import { UserParameters } from '../../models/user-parameters.model';
+import { HttpClient } from '@angular/common/http';
+import { QuestionParameters } from '../../models/question-parameters.model';
+
 
 @Component({
   selector: 'app-question',
@@ -25,23 +28,30 @@ import { SimParameters } from '../../models/sim-parameters.model';
     MatDatepickerModule,
     MatCheckboxModule,
     ChartComponent,
+    CommonModule,
   ],
   templateUrl: './question.component.html',
   styleUrl: './question.component.css',
 })
 
 export class QuestionComponent implements OnInit {
+
+  questions: QuestionParameters[] = []
+
+
   question_id: string = '';
   currB = null;
   entered_B: number[] = [];
-  avg_drawdown = null;
-  max_drawdown = null;
+  drawdowns_str: string[] = []
+  drawdowns_num: number[] = []
+  avg_drawdown = 0;
+  max_drawdown = 0;
   times: number[] = [];
   wealth: number[] = [];
   drawdown: number = 0;
-
-
-  
+  flag: boolean = false;
+  math = Math;
+  run = 0
 
   generateTime(delta_T: number, iterations: number): number[] {
     let times = [];
@@ -82,8 +92,21 @@ export class QuestionComponent implements OnInit {
         wealth[i] = entered_B;
       }
     }
+
     this.drawdown = drawdown
-    console.log(drawdown)
+
+    if(this.flag){
+      this.drawdowns_str.push(this.drawdown.toFixed(2));
+      this.drawdowns_num.push(this.drawdown)
+      this.entered_B.push(this.currB!)
+      this.max_drawdown = this.math.max(...this.drawdowns_num)
+      const sum = this.drawdowns_num.reduce((a, b) => a + b, 0);
+      this.avg_drawdown = (sum / this.drawdowns_num.length) || 0;
+      this.run += 1
+
+      this.cdRef.detectChanges(); 
+    }
+    
     return wealth;
   }
 
@@ -100,15 +123,34 @@ export class QuestionComponent implements OnInit {
     this.wealth = this.simulateWealth(delta_T, iterations, initialWealth, a, b, B_star);
   }
   
-  
 
   ngOnInit(): void {
       this.runSim()
+      this.flag = true;
   }
 
   filledB(){
-    return this.currB
+    return this.currB && this.run < 5;
   }
 
-  constructor(private userDataService: UserDataService) {}
+  nextQuestionReady(){
+    return this.run >= 5
+  }
+
+  nextQuestion(){
+    let params: UserParameters = {
+      question_id: this.question_id,
+      entered_B: this.entered_B,
+      drawdowns: this.drawdowns_num,
+      avg_drawdown: this.avg_drawdown,
+      max_drawdown: this.max_drawdown,
+    }
+
+    this.userDataService.addUserParameter(params)
+
+    console.log(this.userDataService.getUserData())
+  }
+
+  constructor(private userDataService: UserDataService, private cdRef: ChangeDetectorRef, http: HttpClient) {}
+
 }

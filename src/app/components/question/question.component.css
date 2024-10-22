@@ -20,3 +20,20 @@ input[type=number] {
   margin-right: 4vw;
 }
 
+.content button{
+  margin-left: 1vw;
+  margin-right: .5vw;
+  margin-bottom: 1vw;
+}
+
+
+
+.simData{
+  display: flex;
+  margin-left: 4vw;
+}
+
+.simData p {
+  padding-right: 1vw;
+}
+

@@ -58,7 +58,6 @@ export class SignUpComponent {
     this.userDataService.updateUserData('netID', this.netID)
     this.userDataService.updateUserData('DOB', this.DOB)
 
-    console.log(this.userDataService.getUserData())
 
     this.router.navigate(['/question']);
   }

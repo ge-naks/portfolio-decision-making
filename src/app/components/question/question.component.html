@@ -1,7 +1,17 @@
 <div class="header">
   <h1>Question 1</h1>
-  <p>Select a ceiling you think is reasonable. You have 5 attempts. Your responses will be recorded</p>  
+  <p>Select a ceiling you think is reasonable. You have 5 attempts. Your responses will be recorded</p>
+  <p>Drawdowns: {{ drawdowns_str.length > 0 ? '[' + drawdowns_str.join(', ') + ']' : '' }}</p>
 </div>
+
+<div class="simData">
+  <p>Run: {{run}} </p>
+  <p>Current Drawdown: {{drawdown.toFixed(2)}}</p>
+  <p>Max Drawdown: {{ drawdowns_num.length > 0 ? max_drawdown.toFixed(2) : 0 }}</p>
+  <p>Avg Drawdown: {{ drawdowns_num.length > 0 ? avg_drawdown.toFixed(2) : 0 }}</p>
+</div>
+
+
 
 <app-chart [times]="times" [wealth]="wealth"></app-chart>
 
@@ -17,7 +27,10 @@
     }
   </mat-form-field>
 <button mat-raised-button (click)="runSim()" [disabled]="!filledB()">Run Simulation</button>
+<button mat-raised-button (click)="nextQuestion()" [disabled]="!nextQuestionReady()">Next Question</button>
 </div>
-<p>{{this.drawdown}}</p>
+
+
+
 
 

@@ -26,13 +26,16 @@ export class ChartComponent implements OnInit {
           borderColor: 'rgb(75, 192, 192)',
           tension: 0.1
         }
-      ]
+      ],
     },
     options: {
       elements: {
         point: {
           radius: 0,
           hoverRadius: 0,
+        },
+        line:{
+          borderWidth: 1
         }
       },
       responsive: true,
