@@ -85,7 +85,6 @@ export class QuestionComponent implements OnInit {
     this.questions = jsonData.questions;
     this.questions = this.shuffleArray(this.questions)
 
-    console.log(this.questions);
 }
 
 
@@ -157,14 +156,12 @@ export class QuestionComponent implements OnInit {
 
     this.times = this.generateTime(delta_T, iterations);
     this.wealth = this.simulateWealth(delta_T, iterations, initialWealth, a, b, B_star);
-    console.log(this.currentQuestionIndex)
   }
 
 
   async ngOnInit(): Promise<void> {
       this.runSim()
       await this.loadQuestions();
-      console.log(this.questions)
       this.flag = true;
   }
 
