@@ -13,6 +13,7 @@ import { UserParameters } from '../../models/user-parameters.model';
 import { QuestionParameters } from '../../models/question-parameters.model';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 
@@ -40,13 +41,13 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class QuestionComponent implements OnInit {
-  constructor(private userDataService: UserDataService, private cdRef: ChangeDetectorRef, private http: HttpClient) {}
+  constructor(private userDataService: UserDataService, private cdRef: ChangeDetectorRef, private http: HttpClient, private router: Router) {}
 
   questions: QuestionParameters[] = []
 
 
   question_id: string = '';
-  currB = null;
+  currB : number | null = null;
   entered_B: number[] = [];
   drawdowns_str: string[] = []
   drawdowns_num: number[] = []
@@ -55,7 +56,6 @@ export class QuestionComponent implements OnInit {
   times: number[] = [];
   wealth: number[] = [];
   drawdown: number = 0;
-  flag: boolean = false;
   math = Math;
   run = 0
   currentQuestionIndex: number = 0;
@@ -69,11 +69,8 @@ export class QuestionComponent implements OnInit {
   }
 
   loadCurrentQuestion() {
-    const question = this.questions[this.currentQuestionIndex];
-    if (question) {
-      this.question_id = question.question_id;
-      this.runSim(question.delta_T, question.T_horizon, question.initial_wealth, question.A, question.b);
-    }
+    this.wealth = []
+    this.times = []
   }
 
 
@@ -84,8 +81,6 @@ export class QuestionComponent implements OnInit {
 
     this.questions = jsonData.questions;
     this.questions = this.shuffleArray(this.questions)
-
-    console.log(this.questions);
 }
 
 
@@ -131,7 +126,6 @@ export class QuestionComponent implements OnInit {
 
     this.drawdown = drawdown
 
-    if(this.flag){
       this.drawdowns_str.push(this.drawdown.toFixed(2));
       this.drawdowns_num.push(this.drawdown)
       this.entered_B.push(this.currB!)
@@ -140,32 +134,25 @@ export class QuestionComponent implements OnInit {
       this.avg_drawdown = (sum / this.drawdowns_num.length) || 0;
       this.run += 1
 
-      this.cdRef.detectChanges();
-    }
+
+
     
     return wealth;
   }
 
 
   runSim(delta_T: number = 0.01, iterations: number = 100, initialWealth: number = 1, a: number = 1, b: number = 1): void {
-    let B_star: number;
-    if (!this.currB){
-      B_star = 2;
-    }else{
-      B_star = this.currB;
-    }
+    let B_star = this.currB!
+
 
     this.times = this.generateTime(delta_T, iterations);
     this.wealth = this.simulateWealth(delta_T, iterations, initialWealth, a, b, B_star);
-    console.log(this.currentQuestionIndex)
   }
 
 
   async ngOnInit(): Promise<void> {
-      this.runSim()
       await this.loadQuestions();
       console.log(this.questions)
-      this.flag = true;
   }
 
   filledB(){
@@ -177,6 +164,20 @@ export class QuestionComponent implements OnInit {
   }
 
   nextQuestion() {
+
+    const params: UserParameters = {
+      question_id: this.questions[this.currentQuestionIndex].question_id,
+      entered_B: [...this.entered_B], // Save a copy of entered_B
+      drawdowns: [...this.drawdowns_num], // Save a copy of drawdowns_num
+      avg_drawdown: this.avg_drawdown,
+      max_drawdown: this.max_drawdown,
+    };
+
+    
+      this.userDataService.addUserParameter(params);
+      console.log(this.userDataService.getUserData());
+      this.currB = null
+
     if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
       this.loadCurrentQuestion();
@@ -185,21 +186,26 @@ export class QuestionComponent implements OnInit {
       this.max_drawdown = 0
       this.drawdowns_num = []
       this.drawdowns_str = []
+      this.entered_B = [];
+      this.currB = null
     } else {
       console.log("No more questions.");
+      this.navigateEnd()
     }
-
-    // Collect and save data for the current question
-    let params: UserParameters = {
-      question_id: this.question_id,
-      entered_B: this.entered_B,
-      drawdowns: this.drawdowns_num,
-      avg_drawdown: this.avg_drawdown,
-      max_drawdown: this.max_drawdown,
-    };
-
-    this.userDataService.addUserParameter(params);
-    console.log(this.userDataService.getUserData());
   }
+
+  buttonTag(){
+
+    if(this.currentQuestionIndex == this.questions.length - 1){
+      return 'Submit'
+    }
+    return 'Next Question'
+  }
+
+  navigateEnd(){
+    console.log(this.userDataService.getUserData())
+    this.router.navigate(['/submit'])
+  }
+
 }
 

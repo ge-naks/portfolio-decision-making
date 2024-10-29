@@ -59,7 +59,7 @@ export class SignUpComponent {
     this.userDataService.updateUserData('DOB', this.DOB)
 
 
-    this.router.navigate(['/question']);
+    this.router.navigate(['/sandbox']);
   }
 
   completeCheck(): boolean {

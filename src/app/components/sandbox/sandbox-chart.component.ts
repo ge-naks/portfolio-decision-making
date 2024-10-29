@@ -2,13 +2,13 @@ import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { Chart, registerables, ChartConfiguration, ChartType, LinearScale, Tooltip} from 'chart.js';
 
 @Component({
-  selector: 'app-chart',
+  selector: 'app-sandbox-chart',
   standalone: true,
   imports: [],
-  templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.css'], // Change to styleUrls
+  templateUrl: './sandbox-chart.component.html',
+  styleUrls: ['./sandbox-chart.component.css'],
 })
-export class ChartComponent implements OnInit {
+export class SandboxChartComponent implements OnInit {
 
   constructor(private cdr: ChangeDetectorRef) {}
   @Input() times: number[] = [];
@@ -73,7 +73,7 @@ export class ChartComponent implements OnInit {
   ngAfterViewInit(): void {
 
     if (!this.chart) {
-    this.chart = new Chart('MyChart', this.config);
+    this.chart = new Chart('sandboxChart', this.config);
     this.updateChartData();
     this.cdr.detectChanges();
     }
