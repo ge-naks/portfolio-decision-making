@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChartComponent } from "../chart/chart.component";
-import { run } from 'node:test';
 import { MatButtonModule } from '@angular/material/button';
 import { SandboxChartComponent } from './sandbox-chart.component';
 
@@ -18,6 +17,7 @@ import { SandboxChartComponent } from './sandbox-chart.component';
 export class SandboxComponent implements OnInit {
   times: number[] = [];
   wealth: number[] = [];
+  harvest: string = '0'
 
 
   constructor(private router: Router) {}
@@ -45,7 +45,7 @@ export class SandboxComponent implements OnInit {
     b: number,
     entered_B: number
   ) {
-    let drawdown = 0;
+    let harvest = 0;
     let wealth = Array<number>(iterations/ delta_T).fill(0);
     wealth[0] = initialWealth;
     for (let i = 1; i < iterations / delta_T; i++) {
@@ -57,10 +57,12 @@ export class SandboxComponent implements OnInit {
         break;
       }
       if(wealth[i] > entered_B){
-        drawdown += wealth[i] - entered_B;
+        harvest += wealth[i] - entered_B;
         wealth[i] = entered_B;
       }
     }
+
+    this.harvest = harvest.toFixed(2);
     
     return wealth;
   }

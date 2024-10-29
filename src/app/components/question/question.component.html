@@ -1,14 +1,14 @@
 <div class="header">
   <h1>Question {{currentQuestionIndex + 1}} </h1>
   <p>Select a ceiling you think is reasonable. You have 5 attempts. Your responses will be recorded</p>
-  <p>Drawdowns: {{ drawdowns_str.length > 0 ? '[' + drawdowns_str.join(', ') + ']' : '' }}</p>
+  <p>harvests: {{ harvests_str.length > 0 ? '[' + harvests_str.join(', ') + ']' : '' }}</p>
 </div>
 
 <div class="simData">
   <p>Run: {{run}} </p>
-  <p>Current Drawdown: {{drawdown.toFixed(2)}}</p>
-  <p>Max Drawdown: {{ drawdowns_num.length > 0 ? max_drawdown.toFixed(2) : 0 }}</p>
-  <p>Avg Drawdown: {{ drawdowns_num.length > 0 ? avg_drawdown.toFixed(2) : 0 }}</p>
+  <p>Current Harvest: {{harvest.toFixed(2)}}</p>
+  <p>Max Harvest: {{ harvests_num.length > 0 ? max_harvest.toFixed(2) : 0 }}</p>
+  <p>Avg Harvest: {{ harvests_num.length > 0 ? avg_harvest.toFixed(2) : 0 }}</p>
 </div>
 
 

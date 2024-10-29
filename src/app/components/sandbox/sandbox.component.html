@@ -2,6 +2,7 @@
     <h1>Sandbox</h1>
 
     <h2>Get a better idea of whats going on. Try it out for yourself!</h2>
+    <p>Current harvest: {{harvest}} </p>
 
     <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -14,5 +15,6 @@
 
     <!-- <app-chart [times]="times" [wealth]="wealth"></app-chart> -->
     <app-sandbox-chart [times]="times" [wealth]="wealth"></app-sandbox-chart>
+    <button mat-flat-button  (click)="runSim()" >Rerun Simulation</button>
     <button mat-flat-button  (click)="toNext()" >Continue</button>
   </div>
