@@ -1,8 +1,5 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-
-/firebase-service.ts
-
 # Compiled output
 /dist
 /tmp
@@ -43,3 +40,7 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# API keys and config
+src/environments/api-key.ts
+

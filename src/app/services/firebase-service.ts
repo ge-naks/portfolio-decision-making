@@ -2,7 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import { getFirestore } from 'firebase/firestore';
-import { firebaseConfig } from '../../assets/firebase-config';
+import { firebaseConfig } from '../../environments/firebase-config';
 import { collection, addDoc } from 'firebase/firestore';
 import { Injectable } from '@angular/core';
 import { UserData } from '../models/user-data.model';
