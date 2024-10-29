@@ -5,7 +5,6 @@ export interface UserData{
     lName: string;
     netID: string;
     DOB: Date;
-    
     parameter_responses: UserParameters[]
 
 }
