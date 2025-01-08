@@ -5,16 +5,16 @@
     <p>Current harvest: {{harvest}} </p>
 
     <p>
-      Here we have a predefined ceiling. This ceiling represents a maximum allowed value for a given portfolio. We assume
-      that the growth follows brownian motion with drift. Each point is generated procedurally, and any wealth generated above
-      the ceiling is "harvested", taken aside to be utilized in other investments, expenses etc. A button below is provided to
-      generate several different simulations. Notivce how the harvest can change from simulation to simulation. In fact, you might
-      get unlucky and bankrupt your portfolio quickly, losing out on earnings, or earning nothing entirely. Think how you would 
+      We have a predefined ceiling that represents the maximum value for a given portfolio. We assume
+      that the growth follows brownian motion with drift; each point is generated procedurally. Any wealth generated above
+      the ceiling is "harvested". A button below is provided to generate several different simulations for the same set of parameters. 
+      Notice how the harvest can change from simulation to simulation. In fact, you might get unlucky and bankrupt your 
+      portfolio quickly, losing out on earnings, or earning nothing entirely. Think how you would 
       make these decisions!
     </p>
 
     <!-- <app-chart [times]="times" [wealth]="wealth"></app-chart> -->
     <app-sandbox-chart [times]="times" [wealth]="wealth"></app-sandbox-chart>
     <button mat-flat-button  (click)="runSim()" >Rerun Simulation</button>
-    <button mat-flat-button  (click)="toNext()" >Continue</button> might 
+    <button mat-flat-button  (click)="toNext()" >Continue</button> 
   </div>
