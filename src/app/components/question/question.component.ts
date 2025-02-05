@@ -86,8 +86,8 @@ export class QuestionComponent implements OnInit {
 
   generateTime(delta_T: number, iterations: number): number[] {
     let times = [];
-    for (let i = 0; i < iterations / delta_T; i++) {
-      times[i] = i * delta_T;
+    for (let i = 0; i < Number(iterations / delta_T); i++) {
+      times[i] = i;
     }
     return times;
   }

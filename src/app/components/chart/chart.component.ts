@@ -6,7 +6,7 @@ import { Chart, registerables, ChartConfiguration} from 'chart.js';
   standalone: true,
   imports: [],
   templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.css'], // Change to styleUrls
+  styleUrls: ['./chart.component.css'],
 })
 export class ChartComponent implements OnInit {
 
@@ -43,8 +43,8 @@ export class ChartComponent implements OnInit {
       scales: {
         x: {
           ticks: {
-            autoSkip: true, // Skips ticks if there are too many to fit in the view
-            maxRotation: 0 // Prevents label rotation, making it clearer
+            autoSkip: true, 
+            maxRotation: 0
           }
         },
         y: {
@@ -87,7 +87,7 @@ export class ChartComponent implements OnInit {
     if (this.chart) {
       this.chart.data.labels = this.times;
       this.chart.data.datasets[0].data = this.wealth;
-      this.chart.update(); // Update the chart with new data
+      this.chart.update();
     }
   }
 
