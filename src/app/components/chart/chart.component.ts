@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
-import { Chart, registerables, ChartConfiguration, ChartType, LinearScale, Tooltip} from 'chart.js';
+import { Chart, registerables, ChartConfiguration} from 'chart.js';
 
 @Component({
   selector: 'app-chart',

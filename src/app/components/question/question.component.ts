@@ -189,6 +189,7 @@ export class QuestionComponent implements OnInit {
       this.run = 0;
       this.avg_harvest = 0;
       this.max_harvest = 0;
+      this.harvest = 0;
       this.harvests_num = [];
       this.harvests_str = [];
       this.entered_B = [];
