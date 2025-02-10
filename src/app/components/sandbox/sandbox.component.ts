@@ -3,12 +3,12 @@ import { Router } from '@angular/router';
 import { ChartComponent } from "../chart/chart.component";
 import { MatButtonModule } from '@angular/material/button';
 import { SandboxChartComponent } from './sandbox-chart.component';
+import { time } from 'console';
 
 @Component({
   selector: 'app-sandbox',
   standalone: true,
-  imports: [ChartComponent,
-    MatButtonModule,
+  imports: [ MatButtonModule,
     SandboxChartComponent
   ],
   templateUrl: './sandbox.component.html',
@@ -25,11 +25,12 @@ export class SandboxComponent implements OnInit {
   generateTime(delta_T: number, iterations: number): number[] {
     let times = [];
     for (let i = 0; i < iterations / delta_T; i++) {
-      times[i] = i * delta_T;
+      times[i] = i;
     }
     return times;
   }
 
+  // box muller transform. X ~ Unif(0, 1) -> X ~ Norm(0, 1)
   gaussianRandom(mean: number, stdev: number) {
     const u = 1 - Math.random();
     const v = Math.random();
@@ -68,7 +69,7 @@ export class SandboxComponent implements OnInit {
   }
 
 
-  runSim(delta_T: number = 0.01, iterations: number = 100, initialWealth: number = 1, a: number = 1, b: number = 1): void {
+  runSim(delta_T: number = 0.01, iterations: number = 10, initialWealth: number = 1, a: number = 1, b: number = 1): void {
     
     this.times = this.generateTime(delta_T, iterations);
     this.wealth = this.simulateWealth(delta_T, iterations, initialWealth, a, b, 6);

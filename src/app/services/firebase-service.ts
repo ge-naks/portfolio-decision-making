@@ -16,9 +16,7 @@ export class FirebaseService {
   analytics = getAnalytics(this.app);
   db = getFirestore(this.app);
 
-  async postUserData(
-    userData: UserData
-  ) {
+  async postUserData(userData: UserData) {
     try {
       const docRef = await addDoc(collection(this.db, 'users'), {
         fName: userData.fName,

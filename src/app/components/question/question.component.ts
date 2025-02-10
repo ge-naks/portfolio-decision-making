@@ -41,8 +41,6 @@ import { FirebaseService } from '../../services/firebase-service';
 export class QuestionComponent implements OnInit {
   constructor(
     private userDataService: UserDataService,
-    private cdRef: ChangeDetectorRef,
-    private http: HttpClient,
     private router: Router,
     private firebase: FirebaseService
   ) {}
@@ -80,7 +78,7 @@ export class QuestionComponent implements OnInit {
     const response = await fetch('assets/survey-parameters.json');
     const jsonData = await response.json();
 
-    this.questions = jsonData.questions;
+    this.questions = jsonData.questions as QuestionParameters[];
     this.questions = this.shuffleArray(this.questions);
   }
 
@@ -107,6 +105,10 @@ export class QuestionComponent implements OnInit {
     b: number,
     entered_B: number
   ) {
+
+
+
+
     let harvest = 0;
     let wealth = Array<number>(iterations / delta_T).fill(0);
     wealth[0] = initialWealth;
@@ -115,7 +117,7 @@ export class QuestionComponent implements OnInit {
       let delta_W = delta_T * a + b * noise;
       wealth[i] = wealth[i - 1] + delta_W;
       if (wealth[i] < 0) {
-        wealth[i] = 0;
+        wealth[i] = 0
         break;
       }
       if (wealth[i] > entered_B) {
@@ -144,6 +146,12 @@ export class QuestionComponent implements OnInit {
     a: number = 1,
     b: number = 1
   ): void {
+    delta_T = this.questions[this.currentQuestionIndex].delta_T
+    iterations = this.questions[this.currentQuestionIndex].T_horizon
+    initialWealth = this.questions[this.currentQuestionIndex].initial_wealth
+    a = this.questions[this.currentQuestionIndex].A
+    b = this.questions[this.currentQuestionIndex].b
+
     let B_star = this.currB!;
 
     this.times = this.generateTime(delta_T, iterations);
@@ -173,8 +181,8 @@ export class QuestionComponent implements OnInit {
   nextQuestion() {
     const params: UserParameters = {
       question_id: this.questions[this.currentQuestionIndex].question_id,
-      entered_B: [...this.entered_B], // Save a copy of entered_B
-      harvests: [...this.harvests_num], // Save a copy of harvests_num
+      entered_B: [...this.entered_B],
+      harvests: [...this.harvests_num],
       avg_harvest: this.avg_harvest,
       max_harvest: this.max_harvest,
     };

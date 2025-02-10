@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
-import { Chart, registerables, ChartConfiguration, ChartType, LinearScale, Tooltip} from 'chart.js';
+import { Chart, registerables, ChartConfiguration} from 'chart.js';
 
 @Component({
   selector: 'app-sandbox-chart',
@@ -43,8 +43,8 @@ export class SandboxChartComponent implements OnInit {
       scales: {
         x: {
           ticks: {
-            autoSkip: true, // Skips ticks if there are too many to fit in the view
-            maxRotation: 0 // Prevents label rotation, making it clearer
+            autoSkip: true,
+            maxRotation: 0
           }
         },
         y: {

@@ -7,17 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {
   MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
   MatDialogRef,
-  MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { UserDataService } from '../../services/user-data.service';
-import { UserParameters } from '../../models/user-parameters.model';
 import { Router } from '@angular/router';
 
 
@@ -29,7 +24,6 @@ import { Router } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatButtonModule,
     MatIconModule,
     ReactiveFormsModule,
     MatButtonModule,
@@ -92,10 +86,6 @@ export class SignUpComponent {
   styleUrl: './agreement.css',
   imports: [
     MatButtonModule,
-    MatDialogActions,
-    MatDialogClose,
-    MatDialogTitle,
-    MatDialogContent,
     MatCheckboxModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

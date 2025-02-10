@@ -94,7 +94,7 @@ export class ChartComponent implements OnInit {
   generateXLabels(wealth: number[]): number[] {
     const labels: number[] = [];
     for(let i = 0; i < wealth.length; i ++){
-      if (wealth[i] % 100 == 0) {
+      if (wealth[i] % 200 == 0) {
         labels.push(wealth[i])
       }
     }
